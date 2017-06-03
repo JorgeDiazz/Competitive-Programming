@@ -20,7 +20,7 @@ import java.util.Scanner;
 			cola2.offer(cola1.element());
 		}
 
-		cola2.forEach(i -> {System.out.print(i+" ");});
+		cola2.forEach(i -> System.out.print(i+" "));
 		
 
 	}
