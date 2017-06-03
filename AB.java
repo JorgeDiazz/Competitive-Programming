@@ -1,3 +1,8 @@
+/*
+TopCoder
+CHALLENGE OF:  https://community.topcoder.com/stat?c=problem_statement&pm=13642&rd=16312
+*/
+
 import java.util.ArrayList;
 import java.util.Scanner;
 
