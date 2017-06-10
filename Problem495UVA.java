@@ -5,7 +5,7 @@ import java.math.BigInteger;
 
 class Problem495UVA {
 
-	static BigInteger[] array = new BigInteger[5000];
+	static BigInteger[] array = new BigInteger[5001];
 	static int index = 2;
 
 	public static void main(String[] args) throws IOException {
