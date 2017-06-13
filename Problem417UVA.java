@@ -5,7 +5,7 @@ import java.util.Hashtable;
 
 class Problem417UVA {
 
-	static Hashtable<String, Integer> memo = new Hashtable<>();
+	static Hashtable<String, Integer> memo = new Hashtable<>(83681);
 
 	public static void main(String[] args) throws IOException {
 		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
@@ -22,8 +22,8 @@ class Problem417UVA {
 				base.insert(0, (char) ('a' - 1));
 				modificarString(base, 0);
 				ultimaPosicion++;
-			} else if (base.charAt(base.length() - 1) == 'z') {
-				modificarString(base, (base.length() - 1) - (ultimoPatron(base)));
+			} else if (base.charAt(ultimaPosicion) == 'z') {
+				modificarString(base, (ultimaPosicion) - (ultimoPatron(base)));
 			} else {
 				base.setCharAt(ultimaPosicion, (char) (base.charAt(ultimaPosicion) + 1));
 			}
@@ -31,7 +31,7 @@ class Problem417UVA {
 			memo.put(base.toString(), ++count);
 
 		}
-
+		System.out.println(memo.size());
 		String cadena;
 		while ((cadena = in.readLine()) != null) {
 			System.out.println(stringCorrecto(cadena) ? new Integer(memo.get(cadena)) : 0);
