@@ -80,16 +80,15 @@ class AB {
 	static void findSpecificWord(StringBuilder currentWord, int limit) {
 
 		int count = 0;
-		wordRevised: {
 			for (int i = 0; i < currentWord.length(); i++)
 				if (currentWord.charAt(i) == 'a')
 					for (int j = i + 1; j < currentWord.length(); j++)
 						if (currentWord.charAt(j) == 'b') {
 							count++;
 							if (count > limit)
-								break wordRevised;
+								return;
 						}
-		}
+		
 
 		if (count == limit) {
 			System.out.println(currentWord);
