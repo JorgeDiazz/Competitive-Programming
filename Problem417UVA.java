@@ -31,7 +31,7 @@ class Problem417UVA {
 			memo.put(base.toString(), ++count);
 
 		}
-		System.out.println(memo.size());
+
 		String cadena;
 		while ((cadena = in.readLine()) != null) {
 			System.out.println(stringCorrecto(cadena) ? new Integer(memo.get(cadena)) : 0);
