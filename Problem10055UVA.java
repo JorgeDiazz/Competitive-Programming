@@ -11,7 +11,7 @@ class Problem10055UVA {
 		String cadena;
 		while ((cadena = in.readLine()) != null) {
 			String array[] = cadena.split(" ");
-			System.out.println(Math.abs(Long.parseLong(array[0]) - Long.parseLong(array[1])));
+			System.out.println(Math.abs(Long.parseLong(array[0], 10) - Long.parseLong(array[1], 10)));
 		}
 	}
 
