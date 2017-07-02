@@ -4,10 +4,10 @@ def isPrime(num):
 			return False
 	return True
 
-numPrime = 10001; count = 0; num = 2
+numPrime = 10001; count = 0; num = 1
 while count < numPrime:
+	num += 1
 	if(isPrime(num)):
 		count += 1
-	num += 1
 
-print(num - 1)
+print(num)
