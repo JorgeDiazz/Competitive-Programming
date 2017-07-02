@@ -9,5 +9,4 @@ while count < numPrime:
 	num += 1
 	if(isPrime(num)):
 		count += 1
-
 print(num)
