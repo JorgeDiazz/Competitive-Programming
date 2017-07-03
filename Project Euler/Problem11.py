@@ -1,6 +1,6 @@
 matrix = [[], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], []]
 
-for x in range(0,20): matrix[x] = input().split()
+for x in range(20): matrix[x] = input().split()
 
 result = 0; currentResult = 1
 
