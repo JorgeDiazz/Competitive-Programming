@@ -3,7 +3,7 @@ numbers = "731671765313306249192251196744265747423553491949349698352031277450632
 prod = 1; finalProd = 0
 index = 13; length = len(numbers) - index
 
-for x in range(0, length):
+for x in range(length):
 	for x in range(x, index):
 		prod *= int(numbers[x])
 	if(prod > finalProd):
