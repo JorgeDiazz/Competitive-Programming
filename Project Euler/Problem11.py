@@ -13,16 +13,16 @@ for row in matrix:
         currentResult = 1
 
 #Up to Down
-for column in range(0,20):
-    for row in range(0,17):
+for column in range(20):
+    for row in range(17):
         for rowIterate in range(row, row + 4):
             currentResult *= int(matrix[rowIterate][column])
         result = max(currentResult, result)
         currentResult = 1        
 
 #Left to Rigth Diagonal
-for row in range(0,17):
-    for index in range(0,17):
+for row in range(17):
+    for index in range(17):
         currentResult *= int(matrix[row][index]) * int(matrix[row + 1][index + 1]) * int(matrix[row + 2][index + 2]) * int(matrix[row + 3][index + 3])
         result = max(currentResult, result)
         currentResult = 1                
