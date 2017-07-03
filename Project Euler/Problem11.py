@@ -9,8 +9,7 @@ for row in matrix:
     for start in range(17):
         for index in range(start, start + 4):
             currentResult *= int(row[index])
-        if currentResult > result:
-            result = currentResult
+        result = max(currentResult, result)
         currentResult = 1
 
 #Up to Down
@@ -18,16 +17,14 @@ for column in range(0,20):
     for row in range(0,17):
         for rowIterate in range(row, row + 4):
             currentResult *= int(matrix[rowIterate][column])
-        if currentResult > result:
-            result = currentResult
+        result = max(currentResult, result)
         currentResult = 1        
 
 #Left to Rigth Diagonal
 for row in range(0,17):
     for index in range(0,17):
         currentResult *= int(matrix[row][index]) * int(matrix[row + 1][index + 1]) * int(matrix[row + 2][index + 2]) * int(matrix[row + 3][index + 3])
-        if currentResult > result:
-            result = currentResult
+        result = max(currentResult, result)
         currentResult = 1                
 
 #Rigth to Left Diagonal
@@ -36,8 +33,7 @@ while column > 2:
     row = 0
     while row < 17:
         currentResult *= int(matrix[row][column]) * int(matrix[row + 1][column - 1]) * int(matrix[row + 2][column - 2]) * int(matrix[row + 3][column - 3])
-        if currentResult > result:
-            result = currentResult
+        result = max(currentResult, result)
         currentResult = 1
         row += 1                
     column -= 1    
