@@ -7,9 +7,10 @@ while True:
 
     for x in range(num_hoteles):
         costo_hotel = int(input())
-        camas_disponibles = map(int,input().split())
+        camas_disponibles = map(int, input().split())
         for num_camas in camas_disponibles:
-            if num_camas >= num_participantes and num_participantes * costo_hotel <= presupuesto:
-                costo_minimo = min(costo_minimo, num_participantes * costo_hotel)
+            costo = num_participantes * costo_hotel
+            if num_camas >= num_participantes and costo <= presupuesto:
+                costo_minimo = min(costo_minimo, costo)
 
     print(costo_minimo if costo_minimo != REF  else "stay home")
