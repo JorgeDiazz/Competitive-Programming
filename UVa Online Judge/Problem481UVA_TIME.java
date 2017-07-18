@@ -32,8 +32,7 @@ class Problem481UVA_TIME {
 		for (int i = index; i < inputSequence.size(); i++)
 			if (reference < inputSequence.get(i))
 				findSequence(inputSequence.get(i), i + 1, possibleSubsequence + "," + inputSequence.get(i));
-
-		if (possibleSubsequence.length() >= subsequence.length())
-			subsequence = possibleSubsequence;
+		
+		subsequence = possibleSubsequence.length() >= subsequence.length() ? possibleSubsequence : subsequence;
 	}
 }
