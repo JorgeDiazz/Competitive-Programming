@@ -32,11 +32,9 @@ class Graph {
 	Graph[] graphs;
 	int numberGraph;
 	static int size;
-	LinkedList<Graph> edgesGiven;
 	LinkedList<Graph> edgesReceived;
 
 	public Graph() {
-		edgesGiven = new LinkedList<>();
 		edgesReceived = new LinkedList<>();
 		numberGraph = ++size;
 	}
@@ -49,7 +47,6 @@ class Graph {
 	}
 
 	public void newEdge(int graph1, int graph2) {
-		graphs[graph1 - 1].edgesGiven.addLast(graphs[graph2 - 1]);
 		graphs[graph2 - 1].edgesReceived.addLast(graphs[graph1 - 1]);
 	}
 
@@ -58,8 +55,6 @@ class Graph {
 		StringBuilder solution = new StringBuilder();
 		for (int i = 0; i < graphs.length; i++)
 			solution.append(graphs[i].numberGraph + " ");
-		solution.deleteCharAt(solution.length() - 1);
-		System.out.println(solution);
+		System.out.println(solution.deleteCharAt(solution.length() - 1));
 	}
-
 }
