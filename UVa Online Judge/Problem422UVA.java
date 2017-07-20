@@ -76,7 +76,6 @@ class Problem422UVA {
 							break searchLeft;
 					wordCoordinates = (i + 1) + "," + (j + 1) + " " + (i + 1) + "," + (j + 2 - limit);
 					return true;
-
 				}
 			}
 		}
@@ -124,6 +123,7 @@ class Problem422UVA {
 					return true;
 				}
 			}
+			
 		} else {
 			for (int row = 0, column = j - i; column < matrix.length; row++, column++)
 				diagonal.append(matrix[row][column]);
@@ -140,7 +140,6 @@ class Problem422UVA {
 					wordCoordinates = (i + 1) + "," + (j + 1) + " " + ((i + 2) - limit) + "," + (j + 2 - limit);
 					return true;
 				}
-
 			}
 		}
 
