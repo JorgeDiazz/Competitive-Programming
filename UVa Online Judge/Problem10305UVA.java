@@ -51,7 +51,7 @@ class Graph {
 	}
 
 	public void disconnect() {
-		Arrays.sort(graphs, (o1, o2) -> Integer.compare(o1.edgesReceived.size(), o2.edgesReceived.size()));
+		Arrays.sort(graphs, (g1, g2) -> Integer.compare(g1.edgesReceived.size(), g2.edgesReceived.size()));
 		StringBuilder solution = new StringBuilder();
 		for (int i = 0; i < graphs.length; i++)
 			solution.append(graphs[i].numberGraph + " ");
