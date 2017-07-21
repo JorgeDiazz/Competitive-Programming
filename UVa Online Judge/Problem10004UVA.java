@@ -19,7 +19,7 @@ class Problem10004UVA {
 				graphs.newEdge(Integer.parseInt(graphsEdge[0]), Integer.parseInt(graphsEdge[1]));
 			}
 
-			boolean bicolorable = true;
+			boolean bicolorable = false;
 			search: {
 				if (!(graphs.isSimpleCicle() && CountryGraph.size % 2 != 0)) {
 					for (int i = 0; i < graphs.graphs.length; i++) {
@@ -30,18 +30,16 @@ class Problem10004UVA {
 								CountryGraph secondGraph = edges.get(j);
 								for (int k = i + 1; k < secondGraph.edgesWith.size(); k++) {
 									if (secondGraph.edgesWith.contains(graphs.graphs[k])) {
-										bicolorable = false;
 										break search;
 									}
 								}
 							}
 						}
 					}
-				} else {
-					bicolorable = false;
+					
+					bicolorable = true;
 				}
 			}
-			
 			System.out.println(bicolorable ? "BICOLORABLE." : "NOT BICOLORABLE.");
 		}
 
