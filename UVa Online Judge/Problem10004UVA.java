@@ -34,7 +34,6 @@ class Problem10004UVA {
 										break search;
 									}
 								}
-
 							}
 						}
 					}
@@ -42,6 +41,7 @@ class Problem10004UVA {
 					bicolorable = false;
 				}
 			}
+			
 			System.out.println(bicolorable ? "BICOLORABLE." : "NOT BICOLORABLE.");
 		}
 
