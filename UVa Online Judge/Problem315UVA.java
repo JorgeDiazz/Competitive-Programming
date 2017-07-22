@@ -28,7 +28,7 @@ class Problem315UVA {
 					criticalPlaces++;
 			}
 			System.out.println(criticalPlaces);
-		}
+		} 
 
 	}
 
@@ -65,16 +65,15 @@ class NetworkGraph {
 	}
 
 	public boolean canTravelGraph() {
-		int indexGraph = graphs[0] == graphDisconnected ? 1 : 0;
-		NetworkGraph principalGraph = graphs[indexGraph];
+		NetworkGraph principalGraph = graphs[graphs[0] == graphDisconnected ? 1 : 0];
 		canTravel = new boolean[graphs.length];
-
+		
 		travel(principalGraph);
 
 		int criticalGraphs = 0;
 		for (boolean canGraph : canTravel)
 			if (!canGraph) criticalGraphs++;
-
+		
 		return criticalGraphs == 1;
 	}
 
