@@ -73,8 +73,7 @@ class NetworkGraph {
 
 		int criticalGraphs = 0;
 		for (boolean canGraph : canTravel)
-			if (!canGraph)
-				criticalGraphs++;
+			if (!canGraph) criticalGraphs++;
 
 		return criticalGraphs == 1;
 	}
