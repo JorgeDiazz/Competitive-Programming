@@ -32,6 +32,7 @@ class Problem793UVA {
 					else unsuccess++;
 				}
 			}
+			
 			System.out.print(i < numCases - 1 ? success + "," + unsuccess + "\n\n" : +success + "," + unsuccess + "\n");
 		}
 
