@@ -24,7 +24,7 @@ class Problem793UVA {
 				if (input == null || input.isEmpty()) break;
 				String[] data = input.split(" ");
 				
-				if (data[0].equals("c")){ 
+				if (data[0].equals("c")) { 
 					networks.newEdge(Integer.parseInt(data[1]), Integer.parseInt(data[2]));
 				} else {
 					boolean query = networks.canTravelGraph(Integer.parseInt(data[1]), Integer.parseInt(data[2]));
