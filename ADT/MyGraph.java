@@ -116,6 +116,55 @@ public class MyGraph {
 		return new String(print);
 	}
 
+	
+		public String floydWarshallAlgorithm() {
+
+		// d^0 y p^0
+		int[][] d = new int[graphs.length][graphs.length], pi = new int[graphs.length][graphs.length];
+		for (int i = 0; i < d.length; i++)
+			for (int j = 0; j < d.length; j++)
+				if (i != j) {
+					d[i][j] = weights.containsKey(i + " " + j) ? weights.get(i + " " + j) : 9999999;
+					pi[i][j] = i + 1;
+				} else
+					pi[i][j] = -9999999;
+
+		// d^k y p^k
+		for (int k = 0; k < d.length; k++) {
+			int[][] dAux = new int[graphs.length][graphs.length];
+			int[][] piAux = new int[graphs.length][graphs.length];
+			for (int i = 0; i < dAux.length; i++)
+				for (int j = 0; j < dAux.length; j++) {
+					dAux[i][j] = Math.min(d[i][j], d[i][k] + d[k][j]);
+					piAux[i][j] = d[i][j] == dAux[i][j] ? pi[i][j] : pi[k][j];
+				}
+
+			for (int i = 0; i < d.length; i++) {
+				d[i] = dAux[i];
+				pi[i] = piAux[i];
+			}
+		}
+
+		StringBuilder matrices = new StringBuilder();
+
+		// matriz d
+		matrices.append("d:\n");
+		for (int i = 0; i < d.length; i++) {
+			for (int j = 0; j < d.length; j++)
+				matrices.append(d[i][j] + " ");
+			matrices.append("\n");
+		}
+		matrices.append("\n");
+		// matriz pi
+		matrices.append("pi:\n");
+		for (int i = 0; i < pi.length; i++) {
+			for (int j = 0; j < pi.length; j++)
+				matrices.append(pi[i][j] + " ");
+			matrices.append("\n");
+		}
+		return new String(matrices);
+	}
+	
 	@Override
 	public String toString() {
 		StringBuilder print = new StringBuilder();
