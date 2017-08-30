@@ -1,6 +1,8 @@
 package graphs;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
 
@@ -20,11 +22,23 @@ public class MyGraph {
 		size = numGraphs;
 	}
 
+	class Vertex {
+		public ArrayList<Vertex> edgesWith;
+		public int vertexNumber;
+
+		public Vertex(int n) {
+			vertexNumber = n;
+			edgesWith = new ArrayList<>();
+		}
+	}
+
 	public void newEdge(int graph1, int graph2, int weight) {
 		graphs[graph1].edgesWith.add(graphs[graph2]);
-		if (!isDigraph)
-			graphs[graph2].edgesWith.add(graphs[graph1]);
 		weights.put(graph1 + " " + graph2, weight);
+		if (!isDigraph) {
+			graphs[graph2].edgesWith.add(graphs[graph1]);
+			weights.put(graph2 + " " + graph1, weight);
+		}
 	}
 
 	public Vertex deleteVertex(int n) {
@@ -63,8 +77,7 @@ public class MyGraph {
 		int[] d = new int[size];
 		String[] pi = new String[size];
 
-		for (int i = 0; i < d.length; i++)
-			d[i] = 99999999;
+		Arrays.fill(d, Integer.MAX_VALUE);
 		d[fuente] = 0;
 
 		LinkedList<Vertex> S = new LinkedList<>(), Q = new LinkedList<>();
@@ -100,7 +113,7 @@ public class MyGraph {
 		for (int i = 0; i < pi.length; i++)
 			print.append(pi[i] + " ");
 
-		return print.toString();
+		return new String(print);
 	}
 
 	@Override
@@ -121,14 +134,4 @@ public class MyGraph {
 		return new String(print);
 	}
 
-}
-
-class Vertex {
-	public ArrayList<Vertex> edgesWith;
-	public int vertexNumber;
-
-	public Vertex(int n) {
-		vertexNumber = n;
-		edgesWith = new ArrayList<>();
-	}
 }
