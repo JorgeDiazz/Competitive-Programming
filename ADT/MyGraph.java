@@ -71,9 +71,9 @@ public class MyGraph {
 		return size == 0;
 	}
 
-	public String dijkstraAlgorithm(int fuente) {
+	public void dijkstraAlgorithm(int fuente) {
 
-		int[] d = new int[size];
+		Integer[] d = new Integer[size];
 		String[] pi = new String[size];
 
 		Arrays.fill(d, Integer.MAX_VALUE);
@@ -84,7 +84,7 @@ public class MyGraph {
 			Q.add(graphs[i]);
 
 		while (!Q.isEmpty()) {
-			// Extrayendo el mínimo
+
 			Vertex u = Q.get(0);
 			for (int i = 0; i < Q.size(); i++)
 				if (d[Q.get(i).vertexNumber] < d[u.vertexNumber])
@@ -92,7 +92,6 @@ public class MyGraph {
 			Q.remove(u);
 			S.add(u);
 
-			// Buscando en adyacentes de u
 			for (int i = 0; i < u.edgesWith.size(); i++) {
 				Vertex v = u.edgesWith.get(i);
 				if (weights.containsKey(u.vertexNumber + " " + v.vertexNumber))
@@ -104,6 +103,9 @@ public class MyGraph {
 
 		}
 
+		printVector("d", d);
+		printVector("pi", pi);
+
 		// Imprimir resultados
 		StringBuilder print = new StringBuilder();
 		for (int i = 0; i < d.length; i++)
@@ -112,12 +114,15 @@ public class MyGraph {
 		for (int i = 0; i < pi.length; i++)
 			print.append(pi[i] + " ");
 
-		return new String(print);
 	}
 
 	public void floydWarshallAlgorithm() {
 
-		int[][] d = new int[graphs.length][graphs.length], pi = new int[graphs.length][graphs.length];
+		Integer[][] d = new Integer[graphs.length][graphs.length], pi = new Integer[graphs.length][graphs.length];
+
+		for (int i = 0; i < d.length; i++)
+			Arrays.fill(d[i], 0);
+
 		for (int i = 0; i < d.length; i++)
 			for (int j = 0; j < d.length; j++)
 				if (i != j) {
@@ -127,8 +132,8 @@ public class MyGraph {
 					pi[i][j] = -9999999;
 
 		for (int k = 0; k < d.length; k++) {
-			int[][] dAux = new int[graphs.length][graphs.length];
-			int[][] piAux = new int[graphs.length][graphs.length];
+			Integer[][] dAux = new Integer[graphs.length][graphs.length];
+			Integer[][] piAux = new Integer[graphs.length][graphs.length];
 			for (int i = 0; i < dAux.length; i++)
 				for (int j = 0; j < dAux.length; j++) {
 					dAux[i][j] = Math.min(d[i][j], d[i][k] + d[k][j]);
@@ -163,15 +168,16 @@ public class MyGraph {
 		return new String(print);
 	}
 
-	public void printMatrix(String nameMatrix, int[][] matrix) {
+	public void printVector(String nameVector, Object[] vector) {
+		System.out.println("Vector " + nameVector);
+		Arrays.stream(vector).forEach(cell -> System.out.print(cell + " "));
+		System.out.println();
+	}
 
+	public void printMatrix(String nameMatrix, Object[][] matrix) {
 		System.out.println("Matrix " + nameMatrix);
-		for (int[] row : matrix) {
-			for (int cell : row)
-				System.out.print(cell + " ");
-			System.out.println();
-		}
-
+		Arrays.stream(matrix).forEach((Object row[]) -> {Arrays.stream(row).forEach(cell -> System.out.print(cell + " "));System.out.println();});
+		System.out.println();
 	}
 
 }
