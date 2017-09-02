@@ -2,7 +2,6 @@ package graphs;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
 
@@ -116,10 +115,8 @@ public class MyGraph {
 		return new String(print);
 	}
 
-	
-		public String floydWarshallAlgorithm() {
+	public void floydWarshallAlgorithm() {
 
-		// d^0 y p^0
 		int[][] d = new int[graphs.length][graphs.length], pi = new int[graphs.length][graphs.length];
 		for (int i = 0; i < d.length; i++)
 			for (int j = 0; j < d.length; j++)
@@ -129,7 +126,6 @@ public class MyGraph {
 				} else
 					pi[i][j] = -9999999;
 
-		// d^k y p^k
 		for (int k = 0; k < d.length; k++) {
 			int[][] dAux = new int[graphs.length][graphs.length];
 			int[][] piAux = new int[graphs.length][graphs.length];
@@ -145,26 +141,10 @@ public class MyGraph {
 			}
 		}
 
-		StringBuilder matrices = new StringBuilder();
-
-		// matriz d
-		matrices.append("d:\n");
-		for (int i = 0; i < d.length; i++) {
-			for (int j = 0; j < d.length; j++)
-				matrices.append(d[i][j] + " ");
-			matrices.append("\n");
-		}
-		matrices.append("\n");
-		// matriz pi
-		matrices.append("pi:\n");
-		for (int i = 0; i < pi.length; i++) {
-			for (int j = 0; j < pi.length; j++)
-				matrices.append(pi[i][j] + " ");
-			matrices.append("\n");
-		}
-		return new String(matrices);
+		printMatrix("d", d);
+		printMatrix("pi", pi);
 	}
-	
+
 	@Override
 	public String toString() {
 		StringBuilder print = new StringBuilder();
@@ -181,6 +161,17 @@ public class MyGraph {
 		}
 
 		return new String(print);
+	}
+
+	public void printMatrix(String nameMatrix, int[][] matrix) {
+
+		System.out.println("Matrix " + nameMatrix);
+		for (int[] row : matrix) {
+			for (int cell : row)
+				System.out.print(cell + " ");
+			System.out.println();
+		}
+
 	}
 
 }
