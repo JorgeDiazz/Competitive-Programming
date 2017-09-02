@@ -106,14 +106,6 @@ public class MyGraph {
 		printVector("d", d);
 		printVector("pi", pi);
 
-		// Imprimir resultados
-		StringBuilder print = new StringBuilder();
-		for (int i = 0; i < d.length; i++)
-			print.append(d[i] + " ");
-		print.append("\n");
-		for (int i = 0; i < pi.length; i++)
-			print.append(pi[i] + " ");
-
 	}
 
 	public void floydWarshallAlgorithm() {
@@ -176,7 +168,9 @@ public class MyGraph {
 
 	public void printMatrix(String nameMatrix, Object[][] matrix) {
 		System.out.println("Matrix " + nameMatrix);
-		Arrays.stream(matrix).forEach((Object row[]) -> {Arrays.stream(row).forEach(cell -> System.out.print(cell + " "));System.out.println();});
+		Arrays.stream(matrix).forEach((Object row[]) -> {
+			Arrays.stream(row).forEach(cell -> System.out.print(cell + " "));
+			System.out.println();});
 		System.out.println();
 	}
 
