@@ -142,6 +142,30 @@ public class MyGraph {
 		printMatrix("pi", pi);
 	}
 
+	public void primMSTalgorithm() {
+
+		StringBuilder print = new StringBuilder();
+		LinkedList<Vertex> memo = new LinkedList<>();
+		Integer[] vertexUsed = new Integer[graphs.length];
+		int index = 0;
+		while (memo.size() < graphs.length) {
+			memo.add(graphs[index]);
+			int min = Integer.MAX_VALUE, numVertex = 0, pos = 0;
+			for (int i = 0; i < memo.size(); i++) {
+				for (Vertex vertex : memo.get(i).edgesWith) {
+					if (Arrays.stream(vertexUsed).noneMatch(x -> x == vertex.vertexNumber) && min > weights.get(memo.get(i) + " " + vertex.vertexNumber)) {
+						min = weights.get(memo.get(i) + " " + vertex.vertexNumber);
+						numVertex = vertex.vertexNumber;
+						pos = memo.get(i).vertexNumber;
+					}
+				}
+			}
+			vertexUsed[index++] = numVertex;
+			print.append("Vertex " + pos + " with vertex " + numVertex + ", " + "weight:" + min);
+		}
+
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder print = new StringBuilder();
@@ -170,7 +194,8 @@ public class MyGraph {
 		System.out.println("Matrix " + nameMatrix);
 		Arrays.stream(matrix).forEach((Object row[]) -> {
 			Arrays.stream(row).forEach(cell -> System.out.print(cell + " "));
-			System.out.println();});
+			System.out.println();
+		});
 		System.out.println();
 	}
 
