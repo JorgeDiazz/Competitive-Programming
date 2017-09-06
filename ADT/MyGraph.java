@@ -153,7 +153,8 @@ public class MyGraph {
 			int min = Integer.MAX_VALUE, numVertex = 0, pos = 0;
 			for (int i = 0; i < memo.size(); i++) {
 				for (Vertex vertex : memo.get(i).edgesWith) {
-					if (Arrays.stream(vertexUsed).noneMatch(x -> x == vertex.vertexNumber) && min > weights.get(memo.get(i) + " " + vertex.vertexNumber)) {
+					if (Arrays.stream(vertexUsed).noneMatch(x -> x == vertex.vertexNumber)
+							&& min > weights.get(memo.get(i) + " " + vertex.vertexNumber)) {
 						min = weights.get(memo.get(i) + " " + vertex.vertexNumber);
 						numVertex = vertex.vertexNumber;
 						pos = memo.get(i).vertexNumber;
@@ -162,6 +163,35 @@ public class MyGraph {
 			}
 			vertexUsed[index++] = numVertex;
 			print.append("Vertex " + pos + " with vertex " + numVertex + ", " + "weight:" + min);
+		}
+
+	}
+
+	public void HeldKarpAlgorithm() {
+
+		HashMap<String, Integer> L = new HashMap<>();
+		int[][] matrix = new int[graphs.length][graphs.length];
+
+		for (int i = 0; i < matrix.length; i++)
+			for (int j = 0; j < matrix.length; j++)
+				matrix[i][j] = i == j ? 0 : weights.get(i + " " + j);
+
+		// Inicial
+		for (int i = 1; i < graphs.length; i++)
+			L.put(i + " " + 0, matrix[i][0]);
+
+		int count = 0;
+		ArrayList<Integer> S;
+		while (++count < graphs.length - 1) {
+			S = new ArrayList<>();
+			for (int i = 1; i < matrix.length; i++) {
+				int vertex = 1;
+				while (S.stream().anyMatch(x -> x == 0)) {
+					if (vertex != i)
+						S.add(vertex);
+					vertex++;
+				}
+			}
 		}
 
 	}
