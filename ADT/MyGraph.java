@@ -1,5 +1,3 @@
-package graphs;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -7,9 +5,10 @@ import java.util.LinkedList;
 
 public class MyGraph {
 
+	private int size;
 	private Vertex[] graphs;
 	private boolean isDigraph;
-	private int size;
+	private double sumWeights;
 	private HashMap<String, Integer> weights;
 
 	public MyGraph(int numGraphs, boolean digraph) {
@@ -21,14 +20,29 @@ public class MyGraph {
 		size = numGraphs;
 	}
 
-	class Vertex {
+	protected static class Vertex {
 		public ArrayList<Vertex> edgesWith;
 		public int vertexNumber;
-
 		public Vertex(int n) {
 			vertexNumber = n;
 			edgesWith = new ArrayList<>();
 		}
+	}
+
+	public int size() {
+		return size;
+	}
+
+	public boolean isEmpty() {
+		return size == 0;
+	}
+
+	public double sumWeights() {
+		return sumWeights;
+	}
+
+	public boolean isDigraph() {
+		return isDigraph;
 	}
 
 	public void newEdge(int graph1, int graph2, int weight) {
@@ -37,6 +51,16 @@ public class MyGraph {
 		if (!isDigraph) {
 			graphs[graph2].edgesWith.add(graphs[graph1]);
 			weights.put(graph2 + " " + graph1, weight);
+		}
+		sumWeights += weight;
+	}
+
+	public void deleteEdge(int vertex1, int vertex2) {
+		sumWeights -= weights.remove(vertex1 + " " + vertex2);
+		graphs[vertex1].edgesWith.remove(graphs[vertex1].edgesWith.size() - 1);
+		if (!isDigraph) {
+			weights.remove(vertex2 + " " + vertex1);
+			graphs[vertex2].edgesWith.remove(graphs[vertex2].edgesWith.size() - 1);
 		}
 	}
 
@@ -48,6 +72,7 @@ public class MyGraph {
 					int index = vertex.edgesWith.indexOf(graphs[n]);
 					if (vertex.vertexNumber != n && index > -1) {
 						vertex.edgesWith.remove(index);
+						sumWeights -= weights.remove(n + " " + vertex.vertexNumber);
 						weights.remove(n + " " + vertex.vertexNumber);
 						weights.remove(vertex.vertexNumber + " " + n);
 					}
@@ -59,27 +84,15 @@ public class MyGraph {
 		return null;
 	}
 
-	public Vertex[] toArray() {
-		return graphs;
-	}
-
-	public int size() {
-		return size;
-	}
-
-	public boolean isEmpty() {
-		return size == 0;
-	}
-
-	public void dijkstraAlgorithm(int fuente) {
+	public void dijkstraAlgorithm(int source) {
 
 		Integer[] d = new Integer[size];
 		String[] pi = new String[size];
 
 		Arrays.fill(d, Integer.MAX_VALUE);
-		d[fuente] = 0;
+		d[source] = 0;
 
-		LinkedList<Vertex> S = new LinkedList<>(), Q = new LinkedList<>();
+		LinkedList<Vertex> Q = new LinkedList<>();
 		for (int i = 0; i < graphs.length; i++)
 			Q.add(graphs[i]);
 
@@ -90,7 +103,6 @@ public class MyGraph {
 				if (d[Q.get(i).vertexNumber] < d[u.vertexNumber])
 					u = Q.get(i);
 			Q.remove(u);
-			S.add(u);
 
 			for (int i = 0; i < u.edgesWith.size(); i++) {
 				Vertex v = u.edgesWith.get(i);
@@ -142,64 +154,61 @@ public class MyGraph {
 		printMatrix("pi", pi);
 	}
 
-	public void primMSTalgorithm() {
+	public MyGraph kruskalAlgorithm() {
 
-		StringBuilder print = new StringBuilder();
-		LinkedList<Vertex> memo = new LinkedList<>();
-		Integer[] vertexUsed = new Integer[graphs.length];
-		int index = 0;
-		while (memo.size() < graphs.length) {
-			memo.add(graphs[index]);
-			int min = Integer.MAX_VALUE, numVertex = 0, pos = 0;
-			for (int i = 0; i < memo.size(); i++) {
-				for (Vertex vertex : memo.get(i).edgesWith) {
-					if (Arrays.stream(vertexUsed).noneMatch(x -> x == vertex.vertexNumber)
-							&& min > weights.get(memo.get(i) + " " + vertex.vertexNumber)) {
-						min = weights.get(memo.get(i) + " " + vertex.vertexNumber);
-						numVertex = vertex.vertexNumber;
-						pos = memo.get(i).vertexNumber;
-					}
-				}
+		LinkedList<String> W = new LinkedList<>();
+		weights.forEach((key, value) -> {
+			int index = 0;
+			while (index < W.size() && weights.get(key) > weights.get(W.get(index)))
+				index++;
+			W.add(index, key);
+		});
+
+		MyGraph minimumTree = new MyGraph(graphs.length, false);
+		for (int iteration = 0; iteration < W.size(); iteration++) {
+			if (iteration % 2 == 0) {
+				String weight = W.get(iteration);
+				String[] vertex = weight.split(" ");
+				int vertex1 = Integer.parseInt(vertex[0]), vertex2 = Integer.parseInt(vertex[1]);
+				minimumTree.newEdge(vertex1, vertex2, weights.get(weight));
+				if (minimumTree.existLoop())
+					minimumTree.deleteEdge(vertex1, vertex2);
 			}
-			vertexUsed[index++] = numVertex;
-			print.append("Vertex " + pos + " with vertex " + numVertex + ", " + "weight:" + min);
 		}
 
+		return minimumTree;
 	}
 
-	public void HeldKarpAlgorithm() {
+	private boolean containsLoop;
 
-		HashMap<String, Integer> L = new HashMap<>();
-		int[][] matrix = new int[graphs.length][graphs.length];
-
-		for (int i = 0; i < matrix.length; i++)
-			for (int j = 0; j < matrix.length; j++)
-				matrix[i][j] = i == j ? 0 : weights.get(i + " " + j);
-
-		// Inicial
-		for (int i = 1; i < graphs.length; i++)
-			L.put(i + " " + 0, matrix[i][0]);
-
-		int count = 0;
-		ArrayList<Integer> S;
-		while (++count < graphs.length - 1) {
-			S = new ArrayList<>();
-			for (int i = 1; i < matrix.length; i++) {
-				int vertex = 1;
-				while (S.stream().anyMatch(x -> x == 0)) {
-					if (vertex != i)
-						S.add(vertex);
-					vertex++;
-				}
-			}
+	public boolean existLoop() {
+		containsLoop = false;
+		for (Vertex vertex : graphs) {
+			searchLoop(vertex, new HashMap<>(), new HashMap<>());
+			if (containsLoop)
+				return true;
 		}
+		return false;
+	}
 
+	private void searchLoop(Vertex source, HashMap<Vertex, Boolean> prevSources, HashMap<String, Boolean> memoRoute) {
+		if (!containsLoop)
+			source.edgesWith.forEach(vertex -> {
+				if (!(memoRoute.containsKey(source + " " + vertex) || memoRoute.containsKey(vertex + " " + source))) {
+					memoRoute.put(source + " " + vertex, true);
+					prevSources.put(source, true);
+					if (prevSources.containsKey(vertex)) {
+						containsLoop = true;
+						return;
+					}
+					searchLoop(vertex, prevSources, memoRoute);
+				}
+			});
 	}
 
 	@Override
 	public String toString() {
 		StringBuilder print = new StringBuilder();
-
 		for (Vertex graph : graphs) {
 			if (graph != null) {
 				print = print.append("Graph #" + graph.vertexNumber + "\n").append("Edge with: [");
@@ -210,23 +219,7 @@ public class MyGraph {
 				print = print.append("]\n");
 			}
 		}
-
 		return new String(print);
-	}
-
-	public void printVector(String nameVector, Object[] vector) {
-		System.out.println("Vector " + nameVector);
-		Arrays.stream(vector).forEach(cell -> System.out.print(cell + " "));
-		System.out.println();
-	}
-
-	public void printMatrix(String nameMatrix, Object[][] matrix) {
-		System.out.println("Matrix " + nameMatrix);
-		Arrays.stream(matrix).forEach((Object row[]) -> {
-			Arrays.stream(row).forEach(cell -> System.out.print(cell + " "));
-			System.out.println();
-		});
-		System.out.println();
 	}
 
 }
