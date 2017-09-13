@@ -1,3 +1,5 @@
+package graphs;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -5,12 +7,14 @@ import java.util.LinkedList;
 
 public class MyGraph {
 
-	private int size;
-	private Vertex[] graphs;
-	private boolean isDigraph;
-	private double sumWeights;
-	private HashMap<String, Integer> weights;
+	private int size; // size of the graph
+	private Vertex[] graphs; // vertex's array
+	private boolean isDigraph; // is digraph?
+	private double sumWeights; // sum weights of the edges
+	private boolean containsLoop; // the graph contains a loop?
+	private HashMap<String, Integer> weights; // weights of each edge
 
+	// Main constructor
 	public MyGraph(int numGraphs, boolean digraph) {
 		isDigraph = digraph;
 		graphs = new Vertex[numGraphs];
@@ -20,31 +24,38 @@ public class MyGraph {
 		size = numGraphs;
 	}
 
+	// Class of graph's vertex
 	protected static class Vertex {
-		public ArrayList<Vertex> edgesWith;
-		public int vertexNumber;
+		public ArrayList<Vertex> edgesWith; // indicates the vertex connections
+		public int vertexNumber; // number of the vertex
+		// Vertex constructor
 		public Vertex(int n) {
 			vertexNumber = n;
 			edgesWith = new ArrayList<>();
 		}
 	}
 
+	// Returns the graph's size
 	public int size() {
 		return size;
 	}
 
+	// the graph is empty?
 	public boolean isEmpty() {
 		return size == 0;
 	}
 
+	// Returns the sum of the weights of each vertex
 	public double sumWeights() {
 		return sumWeights;
 	}
 
+	// the graph is digraph?
 	public boolean isDigraph() {
 		return isDigraph;
 	}
 
+	// Creates new edge
 	public void newEdge(int graph1, int graph2, int weight) {
 		graphs[graph1].edgesWith.add(graphs[graph2]);
 		weights.put(graph1 + " " + graph2, weight);
@@ -55,6 +66,7 @@ public class MyGraph {
 		sumWeights += weight;
 	}
 
+	// Deletes a edge
 	public void deleteEdge(int vertex1, int vertex2) {
 		sumWeights -= weights.remove(vertex1 + " " + vertex2);
 		graphs[vertex1].edgesWith.remove(graphs[vertex1].edgesWith.size() - 1);
@@ -64,6 +76,7 @@ public class MyGraph {
 		}
 	}
 
+	// Deletes a vertex
 	public Vertex deleteVertex(int n) {
 		if (graphs[n] != null) {
 			Vertex deletedVertex = graphs[n];
@@ -84,6 +97,7 @@ public class MyGraph {
 		return null;
 	}
 
+	// Executes Disjkstra algorithm
 	public void dijkstraAlgorithm(int source) {
 
 		Integer[] d = new Integer[size];
@@ -97,13 +111,11 @@ public class MyGraph {
 			Q.add(graphs[i]);
 
 		while (!Q.isEmpty()) {
-
 			Vertex u = Q.get(0);
 			for (int i = 0; i < Q.size(); i++)
 				if (d[Q.get(i).vertexNumber] < d[u.vertexNumber])
 					u = Q.get(i);
 			Q.remove(u);
-
 			for (int i = 0; i < u.edgesWith.size(); i++) {
 				Vertex v = u.edgesWith.get(i);
 				if (weights.containsKey(u.vertexNumber + " " + v.vertexNumber))
@@ -112,7 +124,6 @@ public class MyGraph {
 						pi[v.vertexNumber] = String.valueOf(u.vertexNumber);
 					}
 			}
-
 		}
 
 		printVector("d", d);
@@ -120,6 +131,7 @@ public class MyGraph {
 
 	}
 
+	// Executes Floyd - Warshall algorithm
 	public void floydWarshallAlgorithm() {
 
 		Integer[][] d = new Integer[graphs.length][graphs.length], pi = new Integer[graphs.length][graphs.length];
@@ -154,6 +166,7 @@ public class MyGraph {
 		printMatrix("pi", pi);
 	}
 
+	// Executes Kruskal algorithm
 	public MyGraph kruskalAlgorithm() {
 
 		LinkedList<String> W = new LinkedList<>();
@@ -179,8 +192,7 @@ public class MyGraph {
 		return minimumTree;
 	}
 
-	private boolean containsLoop;
-
+	// Returns true if exist a loop in the graph
 	public boolean existLoop() {
 		containsLoop = false;
 		for (Vertex vertex : graphs) {
@@ -191,6 +203,7 @@ public class MyGraph {
 		return false;
 	}
 
+	// Search a loop in the graph
 	private void searchLoop(Vertex source, HashMap<Vertex, Boolean> prevSources, HashMap<String, Boolean> memoRoute) {
 		if (!containsLoop)
 			source.edgesWith.forEach(vertex -> {
@@ -206,6 +219,7 @@ public class MyGraph {
 			});
 	}
 
+	// Convert graph to a string
 	@Override
 	public String toString() {
 		StringBuilder print = new StringBuilder();
