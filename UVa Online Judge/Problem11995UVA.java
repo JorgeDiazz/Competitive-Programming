@@ -1,4 +1,3 @@
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -15,7 +14,6 @@ class Problem11995UVA {
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 
         String input;
-
         while ((input = in.readLine()) != null) {
 
             int numDatos = Integer.parseInt(input);
@@ -31,40 +29,23 @@ class Problem11995UVA {
                 datos = in.readLine().split(" ");
                 dato = Integer.parseInt(datos[1]);
                 if (datos[0].equals("1")) {
-                    pila.push(dato);
-                    cola.offer(dato);
-                    colaPrioridad.add(dato);
+                    pila.push(dato); cola.offer(dato); colaPrioridad.add(dato);
                 } else {
                     if (pila.isEmpty()) {
                         count = 3;
                     } else {
-
-                        if (pila.pop() != dato) {
-                            respuestas[0]++;
-                        }
-
-                        if (cola.poll() != dato) {
-                            respuestas[1]++;
-                        }
-
-                        if (colaPrioridad.remove() != dato) {
-                            respuestas[2]++;
-                        }
+                        if (pila.pop() != dato) respuestas[0]++;
+                        if (cola.poll() != dato) respuestas[1]++;
+                        if (colaPrioridad.remove() != dato) respuestas[2]++;
                     }
                 }
             }
 
-            if (count == 0) {
-                count = (int) Arrays.stream(respuestas).filter(x -> x >= 1).count();
-            }
-
-            if (count < 2) {
-                System.out.println("not sure");
-            } else if (count == 3) {
-                System.out.println("impossible");
-            } else {
-                System.out.println(respuestas[0] == 0 ? "stack" : respuestas[1] == 0 ? "queue" : "priority queue");
-            }
+            if (count == 0) count = (int) Arrays.stream(respuestas).filter(x -> x >= 1).count();
+            if (count < 2) System.out.println("not sure");
+            else if (count == 3) System.out.println("impossible");
+            else System.out.println(respuestas[0] == 0 ? "stack" : respuestas[1] == 0 ? "queue" : "priority queue");
+            
 
         }
 
