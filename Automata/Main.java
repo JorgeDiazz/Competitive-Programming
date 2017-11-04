@@ -42,4 +42,4 @@ public class Main {
 	public static void main(String[] args) {
 		search("abaaba", "abaabasdasdsadsadasabaabaxazzzbazxcxzcxz9iqweqwq");
 	}
-}
+} 
