@@ -28,12 +28,13 @@ class Problem414UVA {
 	}
 
 	private static int countSpaces(String row) {
-
 		int count = 0;
 		for (char character : row.toCharArray()) {
 			if (character == ' ') count++;
 			else if (count > 0)	return count;
 		}
+		
 		return 0;
 	}
+	
 }
