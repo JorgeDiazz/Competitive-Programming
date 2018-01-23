@@ -21,15 +21,10 @@ class Problem414UVA {
 				minSpaces = Math.min(minSpaces, counts[i]);
 			}
 
-			
 			int voids = 0;
 			for (int B : counts) voids += B - minSpaces; 
 			System.out.println(voids);
-			
-			
-
 		}
-
 	}
 
 	private static int countSpaces(String row) {
@@ -39,11 +34,6 @@ class Problem414UVA {
 			if (character == ' ') count++;
 			else if (count > 0)	return count;
 		}
-
 		return 0;
 	}
-	
-	
-	
-
 }
