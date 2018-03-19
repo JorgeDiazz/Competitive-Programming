@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="256.0" prefWidth="438.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tictactoe.FXMLDocumentController">
+   <children>
+      <Line endX="100.0" layoutX="107.0" layoutY="128.0" startX="-100.0" strokeWidth="3.0" style="-fx-rotate: 90;" />
+      <Line endX="100.0" layoutX="148.0" layoutY="95.0" startX="-100.0" strokeWidth="3.0" />
+      <Line endX="100.0" layoutX="148.0" layoutY="166.0" startX="-100.0" strokeWidth="3.0" />
+      <Line endX="100.0" layoutX="177.0" layoutY="128.0" startX="-100.0" strokeWidth="3.0" style="-fx-rotate: 90;" />
+      <Button fx:id="buttonPlay" defaultButton="true" layoutX="292.0" layoutY="198.0" mnemonicParsing="false" onAction="#buttonPlayOnAction" prefHeight="25.0" prefWidth="99.0" text="Play">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </Button>
+      <GridPane fx:id="grid" layoutX="47.0" layoutY="27.0" prefHeight="203.0" prefWidth="203.0">
+        <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints maxHeight="106.0" minHeight="10.0" prefHeight="65.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="77.0" minHeight="0.0" prefHeight="77.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="61.0" minHeight="10.0" prefHeight="61.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+      </GridPane>
+   </children>
+</AnchorPane>
