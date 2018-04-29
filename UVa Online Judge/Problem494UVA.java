@@ -17,7 +17,7 @@ class Problem494UVA {
 						words++;
 						break;
 					}
-
+			 
 			System.out.println(words);
 
 		}
