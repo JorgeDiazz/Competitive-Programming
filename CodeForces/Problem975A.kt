@@ -11,9 +11,8 @@ fun main(args: Array<String>) {
     while (token.hasMoreTokens()){
         val map = HashMap<Char, Boolean>()
         token.nextToken().forEach { map[it] = true }
-        val increment = mapList.any { it == map }
-        if (!increment) mapList.addFirst(map)
+        if (mapList.none { it == map }) mapList.addFirst(map)
     }
-
+    
     println(mapList.size)
 }
