@@ -31,6 +31,7 @@ public class Test {
 						System.out.println(impresor.getLCDNumbers(size, data[1])); // Se llama este método para obtener
 																					// los numeros
 						System.out.println(); // Imprime una línea en blanco
+						input = in.readLine();
 					}
 			}
 		}
