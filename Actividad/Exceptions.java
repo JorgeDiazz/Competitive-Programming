@@ -14,17 +14,14 @@ public class Exceptions {
 	 * 
 	 * @param word
 	 * @return isNumeric
+	 * @throws Exception
 	 */
-	public static boolean isNumeric(String word) {
+	public static boolean isNumeric(String word) throws Exception {
 		try {
 			Integer.parseInt(word);
 			return true;
 		} catch (NumberFormatException e) {
-			try {
-				throw new Exception("La entrada debe ser numérica.");
-			} catch (Exception ex) {
-			}
-			return false;
+			throw new Exception("La entrada debe ser numérica.");
 		}
 
 	}
@@ -34,14 +31,11 @@ public class Exceptions {
 	 * 
 	 * @param data
 	 * @return boolean
+	 * @throws Exception 
 	 */
-	public static boolean isCorrectData(String[] data) {
-		if (data.length < 2 || data.length > 2) {
-			try {
-				throw new Exception("Debe ingresar un caracter ','");
-			} catch (Exception e) {
-			}
-			return false;
+	public static boolean isCorrectData(String[] data) throws Exception {
+		if (data.length > 2 || data.length < 2) {
+			throw new Exception("Debe ingresar los datos en el formato '##,##'.");
 		} else {
 			return true;
 		}

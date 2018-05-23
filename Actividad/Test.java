@@ -1,7 +1,6 @@
 package Actividad;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import static Actividad.Exceptions.*;
 
@@ -13,7 +12,7 @@ import static Actividad.Exceptions.*;
  */
 public class Test {
 
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) throws NumberFormatException, Exception {
 		BufferedReader in = new BufferedReader(new InputStreamReader(System.in)); // Crea el lector para el ingreso de datos
 
 		String input;
