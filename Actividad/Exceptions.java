@@ -47,7 +47,7 @@ public class Exceptions {
 	}
 
 	/**
-	 * Evalua si se sigue pidiendo la entrada
+	 * Evalúa si existen más datos para ingresar
 	 * 
 	 * @param input
 	 * @return next
