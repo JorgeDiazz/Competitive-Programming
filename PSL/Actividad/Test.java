@@ -5,10 +5,15 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import static Actividad.Exceptions.*;
 
+/**
+ * Esta clase contiene el método main para probar el impresor LCD
+ * @author JorgeDíaz
+ *
+ */
 public class Test {
 
 	public static void main(String[] args) throws IOException {
-		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+		BufferedReader in = new BufferedReader(new InputStreamReader(System.in)); // Crea el lector para el ingreso de datos
 
 		String input;
 		while (!(input = in.readLine()).equals("0,0")) { // Repetir el ciclo mientras haya lineas para leer
@@ -19,7 +24,7 @@ public class Test {
 				if (isNumeric(data[0]) && isNumeric(data[1])) { // Se verifica si la entrada es numérica
 					int size = Integer.parseInt(data[0]); // Se realiza la conversión de string a int del size
 					System.out.println(impresor.getLCDNumbers(size, data[1])); // Se llama este método para obtener los numeros
-					System.out.println();
+					System.out.println(); // Imprime una línea en blanco
 				}
 		}
 	}
