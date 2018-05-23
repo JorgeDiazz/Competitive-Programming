@@ -53,7 +53,7 @@ public class Exceptions {
 	 * @param input
 	 * @return next
 	 */
-	public static boolean next(String input) {
+	public static boolean validateInput(String input) {
 		return !input.equals("0,0");
 	}
 }

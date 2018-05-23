@@ -6,29 +6,28 @@ import java.io.InputStreamReader;
 import static Actividad.Exceptions.*;
 
 /**
- * Esta clase contiene el mÃ©todo main para probar el impresor LCD
+ * Esta clase contiene el método main para probar el impresor LCD
  * 
- * @author JorgeDÃ­az
+ * @author JorgeDíaz
  *
  */
 public class Test {
 
 	public static void main(String[] args) throws IOException {
-		BufferedReader in = new BufferedReader(new InputStreamReader(System.in)); // Crea el lector para el ingreso de// datos
-		String input = in.readLine();
-			while (next(input)) { // Repetir el ciclo mientras la entrada sea distinta a '0,0'
-				ImpresorLCD impresor = new ImpresorLCD(); // Se crea un objeto de impresorLCD
-				String[] data = input.split(","); // Se separan las cadenas de texto por la coma (,)
+		BufferedReader in = new BufferedReader(new InputStreamReader(System.in)); // Crea el lector para el ingreso de datos
 
-				if (isCorrectData(data)) // Se verifica que los datos ingresados estÃ©n correctos
-					if (isNumeric(data[0]) && isNumeric(data[1])) { // Se verifica si la entrada es numÃ©rica
-						int size = Integer.parseInt(data[0]); // Se realiza la conversiÃ³n de string a int del size
-						System.out.println(impresor.getLCDNumbers(size, data[1])); // Se llama este mÃ©todo para obtener
-																					// los numeros
-						System.out.println(); // Imprime una lÃ­nea en blanco
-						input = in.readLine();
-					}
+		String input;
+		do { 
+			input = in.readLine(); // Recibe una entrada de datos
+			String[] data = input.split(","); // Se separan las cadenas de texto por la coma (,)
+			if (isCorrectData(data)) { // Se verifica que los datos ingresados estén correctos
+				if (isNumeric(data[0]) && isNumeric(data[1])) { // Se verifica si la entrada es numérica
+					int size = Integer.parseInt(data[0]); // Se realiza la conversión de string a int del size
+					ImpresorLCD impresor = new ImpresorLCD(size, data[1], 2); // Se crea un objeto de impresorLCD
+					System.out.println(impresor); // Se llama este método para obtener los números
+				}
 			}
-		}
-	
+		} while (validateInput(input)); // Repetir el ciclo mientras la entrada sea distinta a '0,0'
+
+	}
 }
