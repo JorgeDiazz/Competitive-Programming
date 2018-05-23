@@ -15,7 +15,7 @@ class ImpresorLCD {
 	 */
 	private Character[][] LCDnumbers;
 	/**
-	 * Datos de cada digito
+	 * Datos de cada dígito
 	 */
 	private int numRows, numColumns, size, numSpaces;
 	/**
@@ -30,10 +30,10 @@ class ImpresorLCD {
 	 * @param numbers
 	 * @param numSpaces
 	 */
-	public ImpresorLCD(int size, String numbers, int numSpaces) {
+	public ImpresorLCD(int size, String numbers) {
 		this.size = size;
 		this.numbers = new int[numbers.length()];
-		this.numSpaces = numSpaces;
+		this.numSpaces = 1;
 		this.numRows = 2 * this.size + 3;
 		this.numColumns = this.size + 2;
 		// Se calcula el tamaño total de la matriz de números LCD

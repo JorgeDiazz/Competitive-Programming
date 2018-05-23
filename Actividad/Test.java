@@ -16,13 +16,13 @@ public class Test {
 		BufferedReader in = new BufferedReader(new InputStreamReader(System.in)); // Crea el lector para el ingreso de datos
 
 		String input;
-		do { 
+		do {  
 			input = in.readLine(); // Recibe una entrada de datos
 			String[] data = input.split(","); // Se separan las cadenas de texto por la coma (,)
 			if (isCorrectData(data)) { // Se verifica que los datos ingresados estén correctos
 				if (isNumeric(data[0]) && isNumeric(data[1])) { // Se verifica si la entrada es numérica
 					int size = Integer.parseInt(data[0]); // Se realiza la conversión de string a int del size
-					ImpresorLCD impresor = new ImpresorLCD(size, data[1], 2); // Se crea un objeto de impresorLCD
+					ImpresorLCD impresor = new ImpresorLCD(size, data[1]); // Se crea un objeto de impresorLCD
 					System.out.println(impresor); // Se llama este método para obtener los números
 				}
 			}
