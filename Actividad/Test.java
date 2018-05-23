@@ -14,9 +14,7 @@ import static Actividad.Exceptions.*;
 public class Test {
 
 	public static void main(String[] args) throws IOException {
-		BufferedReader in = new BufferedReader(new InputStreamReader(System.in)); // Crea el lector para el ingreso de
-																					// datos
-
+		BufferedReader in = new BufferedReader(new InputStreamReader(System.in)); // Crea el lector para el ingreso de// datos
 		String input = in.readLine();
 			while (next(input)) { // Repetir el ciclo mientras la entrada sea distinta a '0,0'
 				ImpresorLCD impresor = new ImpresorLCD(); // Se crea un objeto de impresorLCD
