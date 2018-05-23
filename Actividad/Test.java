@@ -17,10 +17,7 @@ public class Test {
 		BufferedReader in = new BufferedReader(new InputStreamReader(System.in)); // Crea el lector para el ingreso de
 																					// datos
 
-		String input;
-
-		
-			input = in.readLine();
+		String input = in.readLine();
 			while (next(input)) { // Repetir el ciclo mientras la entrada sea distinta a '0,0'
 				ImpresorLCD impresor = new ImpresorLCD(); // Se crea un objeto de impresorLCD
 				String[] data = input.split(","); // Se separan las cadenas de texto por la coma (,)
