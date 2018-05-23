@@ -31,12 +31,17 @@ public class Exceptions {
 	 * 
 	 * @param data
 	 * @return boolean
-	 * @throws Exception 
+	 * @throws Exception
 	 */
 	public static boolean isCorrectData(String[] data) throws Exception {
 		if (data.length > 2 || data.length < 2) {
 			throw new Exception("Debe ingresar los datos en el formato '##,##'.");
 		} else {
+			int firstValue = Integer.parseInt(data[0]);
+			if (firstValue < 1 || firstValue > 10) {
+				throw new Exception("Size debe estar entre 1 y 10.");
+			}
+
 			return true;
 		}
 	}
