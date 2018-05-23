@@ -2,15 +2,15 @@ package Actividad;
 
 /**
  * Esta clase contiene las posibles excepciones que pueden ocurrir durante la
- * ejecución del programa
+ * ejecuciÃ³n del programa
  * 
- * @author JorgeDíaz
+ * @author JorgeDÃ­az
  *
  */
 public class Exceptions {
 
 	/**
-	 * Método que indica si la cadena de texto es numérica
+	 * MÃ©todo que indica si la cadena de texto es numÃ©rica
 	 * 
 	 * @param word
 	 * @return isNumeric
@@ -21,7 +21,7 @@ public class Exceptions {
 			Integer.parseInt(word);
 			return true;
 		} catch (NumberFormatException e) {
-			throw new Exception("La entrada debe ser numérica.");
+			throw new Exception("La entrada debe ser numÃ©rica.");
 		}
 
 	}
@@ -47,10 +47,10 @@ public class Exceptions {
 	}
 
 	/**
-	 * Evalúa si existen más datos para ingresar
+	 * EvalÃºa si existen mÃ¡s datos para ingresar
 	 * 
 	 * @param input
-	 * @return next
+	 * @return continue?
 	 */
 	public static boolean validateInput(String input) {
 		return !input.equals("0,0");
