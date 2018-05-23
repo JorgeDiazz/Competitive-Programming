@@ -52,7 +52,9 @@ public class Exceptions {
 	 * @param input
 	 * @return continue?
 	 */
-	public static boolean validateInput(String input) {
-		return !input.equals("0,0");
+	public static void validateInput(String input) {
+		if (input.equals("0,0")) {
+			System.exit(0);
+		}
 	}
 }
