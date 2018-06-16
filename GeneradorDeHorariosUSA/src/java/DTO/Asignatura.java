@@ -13,6 +13,7 @@ public class Asignatura implements Serializable {
     private int diaClase;
     private int codigoCarrera;
 
+    // Cuando se extrae la información mediante la copia de uSergioArboleda
     public Asignatura(String informacion) {
         String[] datos = informacion.split("\t"), codigoGrupo = datos[0].split("-");
         codigo = codigoGrupo[0];
