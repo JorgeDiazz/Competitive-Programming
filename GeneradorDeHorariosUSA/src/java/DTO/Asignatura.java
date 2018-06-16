@@ -16,13 +16,13 @@ public class Asignatura implements Serializable {
     // Cuando se extrae la información mediante la copia de uSergioArboleda
     public Asignatura(String informacion) {
         String[] datos = informacion.split("\t"), codigoGrupo = datos[0].split("-");
-        codigo = codigoGrupo[0];
-        grupo = codigoGrupo[1];
-        nombre = datos[1];
-        horaInicio = Integer.parseInt(datos[2].substring(0, datos[2].indexOf(':')));
-        horaFin = Integer.parseInt(datos[3].substring(0, datos[3].indexOf(':')));
+        this.codigo = codigoGrupo[0];
+        this.grupo = codigoGrupo[1];
+        this.nombre = datos[1];
+        this.horaInicio = Integer.parseInt(datos[2].substring(0, datos[2].indexOf(':')));
+        this.horaFin = Integer.parseInt(datos[3].substring(0, datos[3].indexOf(':')));
         //semestre
-        diaClase = obtenerDiaClase(datos);
+        this.diaClase = obtenerDiaClase(datos);
         //codigoCarrera
     }
 
@@ -95,7 +95,8 @@ public class Asignatura implements Serializable {
     }
 
     public String getSQLañadirAsignatura() {
-        return "INSERT INTO asignatura VALUES ('" + codigo + "','" + grupo + "','" + nombre + "'," + horaInicio + "," + horaFin + "," + 5 + "," + diaClase + ",0);";
+        //                                                                                                                           semestre             codigo carrera   
+        return "INSERT INTO asignatura VALUES ('" + codigo + "','" + grupo + "','" + nombre + "'," + horaInicio + "," + horaFin + "," + 5 + "," + diaClase + ", 0);";
     }
 
     @Override

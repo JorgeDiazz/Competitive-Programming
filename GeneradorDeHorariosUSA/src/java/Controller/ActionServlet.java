@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServletResponse;
 import DAO.DAO;
 import DTO.Asignatura;
 import DTO.Horario;
-import static java.nio.charset.StandardCharsets.*;
 import java.util.Arrays;
 import java.util.LinkedList;
 
@@ -83,7 +82,6 @@ public class ActionServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
 
         try (PrintWriter out = response.getWriter()) {
-            System.out.println(request.getParameter("asignaturas"));
             String[] stringAsignaturas = request.getParameter("asignaturas").split("_"); // Recibir las asignaturas seleccionadas
             // Recibir todos los datos de las asignaturas
             LinkedList<Asignatura> asignaturas = new LinkedList<>();
@@ -93,9 +91,6 @@ public class ActionServlet extends HttpServlet {
                     asignaturas.addAll(DAO.obtenerAsignaturas(asignatura));
                 }
             }
-
-            System.out.println("asignaturas " + asignaturas);
-
             // Se generan los posibles horarios en tablas html
             Horario horario = new Horario();
             asignaturas.forEach(horario::añadirAsignatura);
@@ -110,7 +105,7 @@ public class ActionServlet extends HttpServlet {
                 // Creando el código HTML de cada horario
                 jspResponse.append("<h3> Opción # ")
                         .append(i + 1)
-                        .append(" </h3><table class=\"table table-bordered\">")
+                        .append("</h3><table class=\"table table-bordered\">")
                         .append("<thead><tr>")
                         .append("<th>Hora</th><th>Lunes</th><th>Martes</th><th>Miércoles</th>")
                         .append("<th>Jueves</th><th>Viernes</th><th>Sábado</th>")
@@ -126,7 +121,6 @@ public class ActionServlet extends HttpServlet {
                     }
                     jspResponse.append("</tr>");
                 }
-
                 jspResponse.append("</tbody></table>");
             }
 

@@ -3,7 +3,6 @@ package DTO;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedList;
-import java.util.Objects;
 
 public class Horario {
 
@@ -29,11 +28,14 @@ public class Horario {
         // Se genera la matriz con todos los horarios especificados
         Object[][] matriz = new Object[TOTAL_HORAS][TOTAL_DIAS];
         listaAsignaturas.forEach(asignatura -> {
-            for (int i = asignatura.getHoraInicio() - 7; i <= asignatura.getHoraFin() - 7; i++) {
-                if (matriz[i][asignatura.getDiaClase()] == null) matriz[i][asignatura.getDiaClase()] = new LinkedList<>();
+            int horaFin = asignatura.getHoraFin() - 7;
+            for (int i = asignatura.getHoraInicio() - 7; i <= horaFin; i++) {
+                if (matriz[i][asignatura.getDiaClase()] == null) 
+                    matriz[i][asignatura.getDiaClase()] = new LinkedList<>();
                 ((LinkedList) matriz[i][asignatura.getDiaClase()]).add(asignatura);
                 // Contar las horas de cada materia
-                if (!horasMateria.containsKey(asignatura.toString())) horasMateria.put(asignatura.toString(), 0);
+                if (!horasMateria.containsKey(asignatura.toString())) 
+                    horasMateria.put(asignatura.toString(), 0);
                 horasMateria.replace(asignatura.toString(), horasMateria.get(asignatura.toString()) + 1);
             }
         });
@@ -43,7 +45,6 @@ public class Horario {
     }
 
     private void generarHorarios(Object[][] matrizHorarios, String[][] posibleHorario, LinkedList<String> materiasUsadas, int lastI, int lastJ) {
-
         for (int j = lastJ; j < TOTAL_DIAS; j++) {
             for (int i = lastI; i < TOTAL_HORAS; i++) {
                 if (matrizHorarios[i][j] != null) {
@@ -55,20 +56,10 @@ public class Horario {
                             for (int index = 0; index < tmpPosibleHorario.length; index++) 
                                 System.arraycopy(posibleHorario[index], 0, tmpPosibleHorario[index], 0, posibleHorario[i].length);
                             // Poner la clase en los horarios que aparezca
-                            for (int row = 0; row < matrizHorarios.length; row++) {
-                                for (int column = 0; column < matrizHorarios[row].length; column++) {
-                                    if (matrizHorarios[row][column] != null) {
-                                        LinkedList<Asignatura> listaPosiblesClases = (LinkedList) matrizHorarios[row][column];
-                                        for (Asignatura asignatura : listaPosiblesClases) {
-                                            if (asignatura.toString().equals(clase.toString())) {
-                                                tmpPosibleHorario[row][column] = clase.toString(); // Añadir la clase
-                                                break;
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-
+                            for (int row = 0; row < matrizHorarios.length; row++) 
+                                for (int column = 0; column < matrizHorarios[row].length; column++) 
+                                    if (matrizHorarios[row][column] != null && ((LinkedList) matrizHorarios[row][column]).stream().anyMatch(asignatura -> asignatura.toString().equals(clase.toString())))
+                                        tmpPosibleHorario[row][column] = clase.toString(); // Añadir la clase
                             LinkedList<String> tmpMateriasUsadas = new LinkedList<>(materiasUsadas);
                             tmpMateriasUsadas.add(clase.getNombre()); // Añadiendo la clase como usada
                             generarHorarios(matrizHorarios, tmpPosibleHorario, tmpMateriasUsadas, i + 1, j); // Poner otras clases
@@ -77,6 +68,7 @@ public class Horario {
                 }
             }
         }
+
         // Verificar que sea un horario válido para visualizar
         if (!tieneRepeticion(posibleHorario) && esCompleto(posibleHorario)) {
             String[][] horario = new String[14][6];
@@ -97,14 +89,15 @@ public class Horario {
         // Verificar que aparezcan todas las asignaturas dentro del posible horario
         Arrays.stream(horario).forEach(row -> Arrays.stream(row).filter(element -> element != null)
                 .forEach(element -> {
-                    if (!horasMateriaPuesta.containsKey(element)) horasMateriaPuesta.put(element, 0);
+                    if (!horasMateriaPuesta.containsKey(element)) 
+                        horasMateriaPuesta.put(element, 0);
                     horasMateriaPuesta.replace(element, horasMateriaPuesta.get(element) + 1);
                     tieneAparicion.entrySet().stream()
                             .filter(entry -> (element.contains(entry.getKey())))
                             .forEach(entry -> tieneAparicion.replace(entry.getKey(), true));
                 }));
 
-        return tieneAparicion.entrySet().stream().noneMatch(entry -> !entry.getValue()) && horasMateriaPuesta.entrySet().stream().noneMatch(entry -> horasMateria.containsKey(entry.getKey()) && !Objects.equals(horasMateriaPuesta.get(entry.getKey()), horasMateria.get(entry.getKey())));
+        return tieneAparicion.entrySet().stream().noneMatch(entry -> !entry.getValue()) && horasMateriaPuesta.entrySet().stream().noneMatch(entry -> horasMateria.containsKey(entry.getKey()) && !horasMateriaPuesta.get(entry.getKey()).equals(horasMateria.get(entry.getKey())));
     }
 
 }
