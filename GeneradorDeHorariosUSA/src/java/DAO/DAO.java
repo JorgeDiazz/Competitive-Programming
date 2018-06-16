@@ -22,11 +22,11 @@ public class DAO {
         try {
             /* HEROKU
             try {
-            String host = "ec2-75-101-142-91.compute-1.amazonaws.com";
-            String dataBase = "d97l4jpd7eb6me";
-            String user = "tfqqifghgfxxay";
+            String host = "";
+            String dataBase = "";
+            String user = "";
             String port = "5432";
-            String password = "212e310953ca9bbe1f184da1ea684e26676884f618e3bb1f12aa19678f405016";
+            String password = "";
             String URL = "jdbc:postgresql://" + host + ":" + port + "/" + dataBase + "?sslmode=require";
             Connection conexion = DriverManager.getConnection(URL, user, password);
             statement = conexion.createStatement();
