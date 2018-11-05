@@ -35,4 +35,6 @@ public class Carrera implements Serializable {
     public static String getSQLObtenerTodos() {
         return "SELECT * FROM carrera";
     }
+    
+    
 }

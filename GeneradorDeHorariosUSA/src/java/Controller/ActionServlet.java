@@ -55,7 +55,7 @@ public class ActionServlet extends HttpServlet {
 
             for (Asignatura asignatura : DAO.obtenerAsignaturas(carrera, semestre)) {
                 StringBuilder newLine = new StringBuilder();
-                String nombreAsignatura = asignatura.getNombre().substring(0, asignatura.getNombre().lastIndexOf("G"));
+                String nombreAsignatura = asignatura.getNombre();
                 newLine.append("<label><input type='checkbox' name='checkbox' value='").append(asignatura.getCodigo()).append(" ").append(nombreAsignatura).append("'>").append(asignatura.getCodigo()).append(" ").append(nombreAsignatura).append("</label><br>"); // Se arma cada checkbox
                 if (!jspResponse.toString().contains(newLine.toString())) {
                     jspResponse.append(newLine.toString());
@@ -83,21 +83,35 @@ public class ActionServlet extends HttpServlet {
 
         try (PrintWriter out = response.getWriter()) {
             String[] stringAsignaturas = request.getParameter("asignaturas").split("_"); // Recibir las asignaturas seleccionadas
+
+            for (int i = 0; i < stringAsignaturas.length; i++) {
+                for (int j = i + 1; j < stringAsignaturas.length; j++) {
+                    if (stringAsignaturas[i].equals(stringAsignaturas[j])) {
+                        stringAsignaturas[j] = "";
+                    }
+                }
+            }
+
+            System.out.println(Arrays.toString(stringAsignaturas));
             // Recibir todos los datos de las asignaturas
             LinkedList<Asignatura> asignaturas = new LinkedList<>();
             if (!stringAsignaturas[0].isEmpty()) {
                 for (String asignatura : stringAsignaturas) {
-                    asignatura = asignatura.substring(asignatura.indexOf(" ") + 1);
-                    asignaturas.addAll(DAO.obtenerAsignaturas(asignatura));
+                    if (!asignatura.isEmpty()) {
+                        asignatura = asignatura.substring(0, asignatura.indexOf(" "));
+                        asignaturas.addAll(DAO.obtenerAsignaturas(asignatura));
+                    }
                 }
             }
+
             // Se generan los posibles horarios en tablas html
             Horario horario = new Horario();
             asignaturas.forEach(horario::añadirAsignatura);
+
             LinkedList<String[][]> horarios = horario.generarHorarios();
 
             StringBuilder jspResponse = new StringBuilder();
-            for (int i = 0, hora = 7; i < horarios.size(); i++, hora = 7) {
+            for (int i = 0, hora = 6; i < horarios.size(); i++, hora = 6) {
 
                 // Obteniendo cada uno de los horarios
                 String[][] matrix = horarios.get(i);
@@ -134,7 +148,7 @@ public class ActionServlet extends HttpServlet {
                 }
             }
 
-            out.println(jspResponse.toString().isEmpty() || isEmpty ? "<h3 style=\"color:red; text-align:center;\"> ¡ No existe ningún horario que contenga todas las asignaturas seleccionadas !</h3>" : jspResponse + "<br>");
+            out.println(jspResponse.toString().isEmpty() || isEmpty ? "<h3 style=\"color:red; text-align:center;\"> ¡ No existe un horario que contenga todas las asignaturas seleccionadas !</h3>" : jspResponse + "<br>");
         }
     }
 

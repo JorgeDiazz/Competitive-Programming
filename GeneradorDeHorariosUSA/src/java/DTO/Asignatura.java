@@ -5,28 +5,14 @@ import java.io.Serializable;
 public class Asignatura implements Serializable {
 
     private String codigo;
-    private String grupo;
+    private int grupo;
     private String nombre;
     private int horaInicio;
     private int horaFin;
     private int semestre;
     private int diaClase;
-    private int codigoCarrera;
 
-    // Cuando se extrae la información mediante la copia de uSergioArboleda
-    public Asignatura(String informacion) {
-        String[] datos = informacion.split("\t"), codigoGrupo = datos[0].split("-");
-        this.codigo = codigoGrupo[0];
-        this.grupo = codigoGrupo[1];
-        this.nombre = datos[1];
-        this.horaInicio = Integer.parseInt(datos[2].substring(0, datos[2].indexOf(':')));
-        this.horaFin = Integer.parseInt(datos[3].substring(0, datos[3].indexOf(':')));
-        //semestre
-        this.diaClase = obtenerDiaClase(datos);
-        //codigoCarrera
-    }
-
-    public Asignatura(String codigo, String grupo, String nombre, int horaInicio, int horaFin, int semestre, int diaClase, int codigoCarrera) {
+    public Asignatura(String codigo, int grupo, String nombre, int horaInicio, int horaFin, int semestre, int diaClase) {
         this.codigo = codigo;
         this.grupo = grupo;
         this.nombre = nombre.trim();
@@ -34,23 +20,13 @@ public class Asignatura implements Serializable {
         this.horaFin = horaFin;
         this.semestre = semestre;
         this.diaClase = diaClase;
-        this.codigoCarrera = codigoCarrera;
-    }
-
-    private int obtenerDiaClase(String[] datos) {
-        for (int i = 4; i < datos.length; i++) {
-            if (datos[i].equals("X")) {
-                return i - 4;
-            }
-        }
-        return -1;
     }
 
     public String getCodigo() {
         return codigo;
     }
 
-    public String getGrupo() {
+    public int getGrupo() {
         return grupo;
     }
 
@@ -78,30 +54,17 @@ public class Asignatura implements Serializable {
         this.semestre = semestre;
     }
 
-    public int getCodigoCarrera() {
-        return codigoCarrera;
+    public static String getSQLObtenerTodasPorCodigo(String codigoAsignatura) {
+        return "select distinct codigo_asignatura, numero_grupo, nombre, hora_inicio, hora_fin, numero_dia_clase from grupo natural join (select * from asignatura_carrera natural join (select codigo as codigo_asignatura, nombre from asignatura) as t1) as t1 natural join clase where codigo_asignatura = " + codigoAsignatura;
     }
 
-    public void setCodigoCarrera(int codigoCarrera) {
-        this.codigoCarrera = codigoCarrera;
-    }
-
-    public static String getSQLObtenerTodasPorNombre(String nombre) {
-        return "SELECT * FROM asignatura WHERE nombre like '" + nombre + "%'";
-    }
-
-    public static String getSQLObtenerTodasPorSemestre(int codigoCarrera, int semestre) {
-        return "SELECT * FROM asignatura WHERE codigo_carrera = " + codigoCarrera + " and semestre = " + semestre;
-    }
-
-    public String getSQLañadirAsignatura() {
-        //                                                                                                                           semestre             codigo carrera   
-        return "INSERT INTO asignatura VALUES ('" + codigo + "','" + grupo + "','" + nombre + "'," + horaInicio + "," + horaFin + "," + 5 + "," + diaClase + ", 0);";
+    public static String getSQLObtenerGruposPorSemestre(int codigoCarrera, int semestre) {
+        return "select distinct codigo_asignatura, numero_grupo, nombre, hora_inicio, hora_fin, semestre, numero_dia_clase, codigo_carrera from grupo natural join (select * from asignatura_carrera natural join (select codigo as codigo_asignatura, nombre from asignatura) as t1) as t1 natural join clase where codigo_carrera = " + codigoCarrera + " and semestre = " + semestre + " order by nombre";
     }
 
     @Override
     public String toString() {
-        return this.nombre + " " + this.grupo;
+        return this.nombre + " G" + (this.grupo < 10 ? "0" + this.grupo : this.grupo);
     }
 
 }

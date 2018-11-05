@@ -20,27 +20,12 @@ public class DAO {
 
     static {
         try {
-            /* HEROKU
-            try {
-            String host = "ec2-75-101-142-91.compute-1.amazonaws.com";
-            String dataBase = "d97l4jpd7eb6me";
-            String user = "tfqqifghgfxxay";
-            String port = "5432";
-            String password = "212e310953ca9bbe1f184da1ea684e26676884f618e3bb1f12aa19678f405016";
-            String URL = "jdbc:postgresql://" + host + ":" + port + "/" + dataBase + "?sslmode=require";
-            Connection conexion = DriverManager.getConnection(URL, user, password);
-            statement = conexion.createStatement();
-            } catch (SQLException ex) {
-            }
-             */
-
- /* LOCALHOST */
             Class.forName("org.postgresql.Driver");
-            Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/base?charSet=UTF-8", "postgres", "pass");
+            Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/horarios", "postgres", "pass");
             statement = connection.createStatement();
         } catch (ClassNotFoundException | SQLException ex) {
-
         }
+  
     }
 
     public static LinkedList<Carrera> obtenerCarreras() {
@@ -56,17 +41,14 @@ public class DAO {
     }
 
     public static LinkedList<Asignatura> obtenerAsignaturas(String carrera, int semestre) {
+
         LinkedList<Asignatura> listaAsignaturas = new LinkedList<>();
         try {
             LinkedList<Carrera> listaCarreras = obtenerCarreras(); // Obtener todas las carreras y conocer el codigo de la carrera deseada
             int codigoCarrera = listaCarreras.stream().filter(x -> x.getNombre().equals(carrera)).collect(Collectors.toList()).get(0).getCodigo();
-            ResultSet result = statement.executeQuery(Asignatura.getSQLObtenerTodasPorSemestre(codigoCarrera, semestre));
-
+            ResultSet result = statement.executeQuery(Asignatura.getSQLObtenerGruposPorSemestre(codigoCarrera, semestre));
             while (result.next()) {
-                int semestreAsignatura = result.getInt(6);
-                if (semestreAsignatura == semestre) {
-                    listaAsignaturas.add(new Asignatura(result.getString(1), result.getString(2), result.getString(3), result.getInt(4), result.getInt(5), semestreAsignatura, result.getInt(7), result.getInt(8)));
-                }
+                listaAsignaturas.add(new Asignatura(result.getString(1), result.getInt(2), result.getString(3), result.getInt(4), result.getInt(5), result.getInt(6), result.getInt(7)));
             }
         } catch (SQLException ex) {
         }
@@ -74,12 +56,13 @@ public class DAO {
         return listaAsignaturas;
     }
 
-    public static LinkedList<Asignatura> obtenerAsignaturas(String nombre) {
+    public static LinkedList<Asignatura> obtenerAsignaturas(String codigoAsignatura) {
         LinkedList<Asignatura> listaAsignaturas = new LinkedList<>();
         try {
-            ResultSet result = statement.executeQuery(Asignatura.getSQLObtenerTodasPorNombre(nombre));
-            while (result.next()) {
-                listaAsignaturas.add(new Asignatura(result.getString(1), result.getString(2), nombre, result.getInt(4), result.getInt(5), result.getInt(6), result.getInt(7), result.getInt(8)));
+            ResultSet result = statement.executeQuery(Asignatura.getSQLObtenerTodasPorCodigo(codigoAsignatura));
+            while (result.next()) { 
+                Asignatura asig = new Asignatura(result.getString(1), result.getInt(2), result.getString(3), result.getInt(4), result.getInt(5), 0, result.getInt(6));
+                listaAsignaturas.add(asig);
             }
         } catch (SQLException ex) {
         }
