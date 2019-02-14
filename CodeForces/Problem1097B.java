@@ -19,7 +19,7 @@ public class Problem1097B {
 
 	private static boolean evaluateCases(Queue<Integer> degrees, int num) {
 		if (degrees.isEmpty()) {
-			if (Math.abs(num) % 360 == 0 && degrees.isEmpty()) return true;
+			if (Math.abs(num) % 360 == 0) return true;
 			return false;
 		}
 
