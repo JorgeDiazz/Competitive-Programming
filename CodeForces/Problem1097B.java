@@ -12,8 +12,7 @@ public class Problem1097B {
 		int n = Integer.parseInt(in.readLine());
 
 		Queue<Integer> degrees = new LinkedList<>();
-		while (n-- > 0)
-			degrees.offer(Integer.parseInt(in.readLine()));
+		while (n-- > 0) degrees.offer(Integer.parseInt(in.readLine()));
 
 		System.out.println(evaluateCases(degrees, -degrees.remove()) ? "YES" : "NO");
 	}
