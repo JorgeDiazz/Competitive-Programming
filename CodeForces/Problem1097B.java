@@ -10,18 +10,20 @@ public class Problem1097B {
 		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 
 		int n = Integer.parseInt(in.readLine());
-		
+
 		Queue<Integer> degrees = new LinkedList<>();
-		while (n-- > 0) degrees.offer(Integer.parseInt(in.readLine()));
-		
+		while (n-- > 0)
+			degrees.offer(Integer.parseInt(in.readLine()));
+
 		System.out.println(evaluateCases(degrees, -degrees.remove()) ? "YES" : "NO");
 	}
 
 	private static boolean evaluateCases(Queue<Integer> degrees, int num) {
-		if (Math.abs(num) % 360 == 0 && degrees.isEmpty())
-			return true;
-		if (degrees.isEmpty())
+		if (degrees.isEmpty()) {
+			if (Math.abs(num) % 360 == 0 && degrees.isEmpty())
+				return true;
 			return false;
+		}
 
 		int peek = degrees.remove();
 		Queue<Integer> degreesTmp1 = new LinkedList<>(degrees), degreesTmp2 = new LinkedList<>(degrees);
