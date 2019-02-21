@@ -4,8 +4,8 @@ This is my competitive programming repository. I solve programming exercises on 
 Mainly i solve UVA exercises. 
 
 ## Visit me:
-* Uva profile: [JorgeDiazz](https://uhunt.onlinejudge.org/id/891333)
-* CodeForces profile: [JorgeDiazz](http://codeforces.com/submissions/JorgeDiazz)
+* UVa: [JorgeDiazz](https://uhunt.onlinejudge.org/id/891333)
+* CodeForces: [JorgeDiazz](http://codeforces.com/submissions/JorgeDiazz)
 
 
  
